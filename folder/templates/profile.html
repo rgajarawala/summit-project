@@ -1,0 +1,52 @@
+{% extends "layout2.html" %}
+
+{% block title %} Profile {% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="jumbotron2 jumbotron-fluid">
+          <div class="container">
+            <h1 class="display-5"><font color="black">Profile</font></h1>
+            <p class="lead"><font color="black"><h3 class="display-6">Username: {{ username[0]["username"] }}</h3></font></p>
+            <p class="lead"><font color="black"><h3 class="display-6">Date Joined: {{ username[0]["datejoined"] }}</h3></font></p>
+          </div>
+        </div>
+        <br><br>
+        <h1 class="display-5" class="jumbotron jumbotron-fluid"><font color="black">Change Password</font></h1>
+        <form action="/changepassword" method="post">
+            <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="password" placeholder="Password" type="password">
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="newpassword" placeholder="New Password" type="password">
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="confirmation" placeholder="Confirm New Password" type="password">
+            </div>
+            <button class="btn btn-primary" type="submit">Change Password</button>
+        </form>
+    </div>
+
+    <script>
+        // Use Ajax and Jquery to check if username currently exists
+        document.querySelector('form').onsubmit = function(e)
+        {
+            e.preventDefault();
+            $.get('/passwordcheck',{username: document.querySelector('input[name=username]').value}, function(data) {
+                if(data)
+                {
+                    document.querySelector('form').submit();
+                }
+                else
+                {
+                	alert("Username does not exist. Try again.");
+                }
+            });
+        };
+    </script>
+
+</body>
+{% endblock %}

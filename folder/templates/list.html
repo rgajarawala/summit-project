@@ -1,0 +1,59 @@
+{% extends "layout2.html" %}
+
+{% block title %}
+    {{ listname[0]["listname"] }}
+{% endblock %}
+
+{% block main %}
+    <br>
+    <h1>{{ listname[0]["listname"] }} Tasks</h1>
+    <div>
+        {% if error %}
+            <div class="alert alert-danger" role="alert"><strong>Error:</strong> {{ error }}</div>
+        {% endif %}
+        <form action="/add/{{ list_id }}" method="POST">
+            <div class=form-group>
+                <label for="todoitem">Add a new task:</label>
+                <input type="text" name="todoitem" autocomplete=off class="form-control">
+
+                <label for="priority" class="pl-2">Priority</label>
+                    <select class="form-control" name="priority">
+                      <option>!</option>
+                      <option>!!</option>
+                      <option>!!!</option>
+                    </select>
+                <input type="submit" value="Add Item" class="btn btn-primary ml-2 mb-2">
+            </div>
+        </form>
+    </div>
+    <br>
+
+    <h2>Tasks</h2>
+    <div>
+    	<table class="table table-borderless">
+    	<thead>
+            <tr>
+                <th class="col-md-9 table left"><div class="col-md-1">Task</div></th>
+                <th class="col-md-1">Priority</th>
+                <th class="col-md-1">Completed</th>
+                <th class="col-md-1">Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for todo in todos %}
+            <tr>
+                <td><div class="col-md-1 specifictd">{% if todo.complete %} <del> {% endif %} {{ todo.task }} {% if todo.complete %} </del>{% endif %}</div></td>
+                <td class="descrip2"><strong>{{ todo.priority }}</strong></td>
+                <td><a href="/complete/{{ todo.task_id }}"><img src="https://cdn1.iconfinder.com/data/icons/vibrancie-action/30/action_027-checkmark-done-check-finish-512.png" alt="" max-width="100%" height="30px"></a></td>
+                <td><a href="/delete/{{ todo.task_id }}"><img src="/static/images/download.png" alt="" max-width="100%" height="30px"></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+    {% if not todos %}
+        {% for i in range(4) %}
+            <br></br>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,188 @@
+{% extends "layout2.html" %}
+
+{% block title %} Index {% endblock %}
+
+{% block main %}
+    <div id="add"><h1>Add Goals and Tasks</h1></div>
+    <div>
+        <form action="/addindex" method="POST">
+            <div class=form-group>
+                <label for="todoitem">Add a new long-term goal:</label>
+                <input type="text" name="todoitem" autocomplete=off class="form-control">
+                <label for="priority" class="pl-2">Priority</label>
+                    <select class="form-control" name="priority">
+                      <option>!</option>
+                      <option>!!</option>
+                      <option>!!!</option>
+                    </select>
+                <input type="hidden" name="list_id" value="1">
+                <input type="submit" value="Add Item" class="btn btn-primary ml-2 mb-2">
+            </div>
+        </form>
+    </div>
+    <div>
+        <form action="/addindex" method="POST">
+            <div class=form-group>
+                <label for="todoitem">Add a new task:</label>
+                <input type="text" name="todoitem" autocomplete=off class="form-control">
+                <label for="priority" class="pl-2">Priority</label>
+                    <select class="form-control" name="priority">
+                      <option>!</option>
+                      <option>!!</option>
+                      <option>!!!</option>
+                    </select>
+                <label for="list_id" class="pl-2">List:</label>
+                    <select class="form-control" name="list_id">
+                      <option value="2">Academics</option>
+                      <option value="3">Health</option>
+                      <option value="4">Social Life</option>
+                      <option value="5">Extracurriculars</option>
+                    </select>
+                <input type="submit" value="Add Item" class="btn btn-primary ml-2 mb-2">
+            </div>
+        </form>
+    </div>
+    <h1>GOALS</h1>
+
+    <div>
+        {% if not goals %}
+            <div class="left"><strong>Add some <a href="#add">long-term goals</a>!</strong></div>
+        {% endif %}
+        <hr class="hrline">
+        <table class="table table-borderless">
+    	<thead>
+            <tr>
+                <th class="col-md-9 left">Goal</th>
+                <th class="col-md-1">Priority</th>
+                <th class="col-md-1">Completed</th>
+                <th class="col-md-1">Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for goal in goals %}
+            <tr>
+                <td><div class="col-md-1 specifictd">{% if goal.complete %} <del> {% endif %} {{ goal.task }} {% if goal.complete %} </del>{% endif %}</div></td>
+                <td class="descrip2"><strong>{{ goal.priority }}</strong></td>
+                <td><a href="/complete/{{ goal.task_id }}"><img src="https://cdn1.iconfinder.com/data/icons/vibrancie-action/30/action_027-checkmark-done-check-finish-512.png" alt="" max-width="100%" height="30px"></a></td>
+                <td><a href="/delete/{{ goal.task_id }}"><img src="/static/images/download.png" alt="" max-width="100%" height="30px"></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+    <h1>TASKS</h1>
+    <div>
+        <h3>Academics</h3>
+        {% if not academics %}
+            <div class="left"><strong>Add some <a href="#add">academic tasks</a>!</strong></div>
+        {% endif %}
+        <hr class="hrline">
+    	<table class="table table-borderless">
+    	<thead>
+            <tr>
+                <th class="col-md-9 left">Task</th>
+                <th class="col-md-1">Priority</th>
+                <th class="col-md-1">Completed</th>
+                <th class="col-md-1">Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for todo in academics %}
+            <tr>
+                <td><div class="col-md-1 specifictd">{% if todo.complete %} <del> {% endif %} {{ todo.task }} {% if todo.complete %} </del>{% endif %}</div></td>
+                <td class="descrip2"><strong>{{ todo.priority }}</strong></td>
+                <td><a href="/complete/{{ todo.task_id }}"><img src="https://cdn1.iconfinder.com/data/icons/vibrancie-action/30/action_027-checkmark-done-check-finish-512.png" alt="" max-width="100%" height="30px"></a></td>
+                <td><a href="/delete/{{ todo.task_id }}"><img src="/static/images/download.png" alt="" max-width="100%" height="30px"></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+        <br>
+    </div>
+     <div>
+    	<h3>Health</h3>
+    	{% if not health %}
+            <div class="left"><strong>Add some <a href="#add">health tasks</a>!</strong></div>
+        {% endif %}
+        <hr class="hrline">
+    	<table class="table table-borderless">
+    	<thead>
+            <tr>
+                <th class="col-md-9 left">Task</th>
+                <th class="col-md-1">Priority</th>
+                <th class="col-md-1">Completed</th>
+                <th class="col-md-1">Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for todo in health %}
+            <tr>
+                <td><div class="col-md-1 specifictd">{% if todo.complete %} <del> {% endif %} {{ todo.task }} {% if todo.complete %} </del>{% endif %}</div></td>
+                <td class="descrip2"><strong>{{ todo.priority }}</strong></td>
+                <td><a href="/complete/{{ todo.task_id }}"><img src="https://cdn1.iconfinder.com/data/icons/vibrancie-action/30/action_027-checkmark-done-check-finish-512.png" alt="" max-width="100%" height="30px"></a></td>
+                <td><a href="/delete/{{ todo.task_id }}"><img src="/static/images/download.png" alt="" max-width="100%" height="30px"></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+        <br>
+    </div>
+    <div>
+        <h3>Social Life</h3>
+        {% if not sociallife %}
+            <div class="left"><strong>Add some <a href="#add">social life tasks</a>!</strong></div>
+        {% endif %}
+        <hr class="hrline">
+    	<table class="table table-borderless">
+    	<thead>
+            <tr>
+                <th class="col-md-9 left">Task</th>
+                <th class="col-md-1">Priority</th>
+                <th class="col-md-1">Completed</th>
+                <th class="col-md-1">Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for todo in sociallife %}
+            <tr>
+                <td><div class="col-md-1 specifictd">{% if todo.complete %} <del> {% endif %} {{ todo.task }} {% if todo.complete %} </del>{% endif %}</div></td>
+                <td class="descrip2"><strong>{{ todo.priority }}</strong></td>
+                <td><a href="/complete/{{ todo.task_id }}"><img src="https://cdn1.iconfinder.com/data/icons/vibrancie-action/30/action_027-checkmark-done-check-finish-512.png" alt="" max-width="100%" height="30px"></a></td>
+                <td><a href="/delete/{{ todo.task_id }}"><img src="/static/images/download.png" alt="" max-width="100%" height="30px"></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+        <br>
+    </div>
+    <div>
+        <h3>Extracurriculars</h3>
+        {% if not extracurriculars %}
+            <div class="left"><strong>Add some <a href="#add">extracurricular tasks</a>!</strong></div>
+        {% endif %}
+        <hr class="hrline">
+    	<table class="table table-borderless">
+    	<thead>
+            <tr>
+                <th class="col-md-9 left">Task</th>
+                <th class="col-md-1">Priority</th>
+                <th class="col-md-1">Completed</th>
+                <th class="col-md-1">Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for todo in extracurriculars %}
+            <tr>
+                <td><div class="col-md-1 specifictd">{% if todo.complete %} <del> {% endif %} {{ todo.task }} {% if todo.complete %} </del>{% endif %}</div></td>
+                <td class="descrip2"><strong>{{ todo.priority }}</strong></td>
+                <td><a href="/complete/{{ todo.task_id }}"><img src="https://cdn1.iconfinder.com/data/icons/vibrancie-action/30/action_027-checkmark-done-check-finish-512.png" alt="" max-width="100%" height="30px"></a></td>
+                <td><a href="/delete/{{ todo.task_id }}"><img src="/static/images/download.png" alt="" max-width="100%" height="30px"></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+        <br>
+    </div>
+
+
+{% endblock %}

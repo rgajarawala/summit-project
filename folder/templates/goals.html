@@ -1,0 +1,55 @@
+{% extends "layout2.html" %}
+
+{% block title %}
+    Goals
+{% endblock %}
+
+{% block main %}
+    <br>
+    <h1>Long-Term Goals</h1>
+    <div>
+        <form action="/add/1" method="POST">
+            <div class=form-group>
+                <label for="todoitem">Add a new goal:</label>
+                <input type="text" name="todoitem" class="form-control">
+                <label for="priority" class="pl-2">Priority</label>
+                    <select class="form-control" name="priority">
+                      <option>!</option>
+                      <option>!!</option>
+                      <option>!!!</option>
+                    </select>
+                <input type="submit" value="Add Item" class="btn btn-primary ml-2 mb-2">
+            </div>
+        </form>
+    </div>
+    <br>
+
+    <h2>Goals</h2>
+    <div>
+    	<table class="table table-borderless">
+    	<thead>
+            <tr>
+                <th class="col-md-10 table left"><div class="col-md-1">Goal</div></th>
+                <th class="col-md-1">Priority</th>
+                <th class="col-md-1">Completed</th>
+                <th class="col-md-1">Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for goal in goals %}
+            <tr>
+                <td><div class="col-md-1 specifictd">{% if goal.complete %} <del> {% endif %} {{ goal.task }} {% if goal.complete %} </del>{% endif %}</div></td>
+                <td class="descrip2"><strong>{{ goal.priority }}</strong></td>
+                <td><a href="/complete/{{ goal.task_id }}"><img src="https://cdn1.iconfinder.com/data/icons/vibrancie-action/30/action_027-checkmark-done-check-finish-512.png" alt="" max-width="100%" height="30px"></a></td>
+                <td><a href="/delete/{{ goal.task_id }}"><img src="/static/images/download.png" alt="" max-width="100%" height="30px"></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+    {% if not goals %}
+        {% for i in range(4) %}
+            <br></br>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
